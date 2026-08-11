@@ -19,6 +19,7 @@ import {
 export function Breadcrumb() {
   const Link = useLink();
   const { breadcrumbs } = useBreadcrumb();
+  console.log("Breadcrumbs:", breadcrumbs);
   const { resources } = useResourceParams();
   const rootRouteResource = matchResourceFromRoute("/", resources);
 
