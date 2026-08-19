@@ -2,6 +2,11 @@ import {createDataProvider, CreateDataProviderOptions} from "@refinedev/rest";
 import {ListResponse} from "@/types";
 import {BACKEND_BASE_URL} from "@/constants";
 
+
+if (!BACKEND_BASE_URL) {
+    throw new Error("BACKEND_BASE_URL is not Configured. Please set VITE_BACKEND_BASE_URL in your .env File");
+}
+
 const options: CreateDataProviderOptions = {
     getList: {
         getEndpoint: ({resource}) => resource,
@@ -16,7 +21,7 @@ const options: CreateDataProviderOptions = {
                 const value = String(filter.value);
 
                 if (resource === 'subjects') {
-                    if (field === 'departments') params.department = value;
+                    if (field === 'department') params.department = value;
                     if (field === 'name' || field === 'code') params.search = value;
                 }
             })

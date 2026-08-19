@@ -4,6 +4,7 @@ export type Subject = {
     code: string;
     description: string;
     department: string;
+    // department: Department;
     createdAt?: string;
 };
 
