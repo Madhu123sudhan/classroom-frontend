@@ -86,7 +86,7 @@
   },
   "scripts": {
     "dev": "refine dev",
-    "build": "refine build",
+    "build": "tsx && refine build",
     "start": "refine start",
     "refine": "refine"
   },
