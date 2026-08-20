@@ -97,7 +97,7 @@ const Create = () => {
             <h1 className="page-title">Create a Class</h1>
             <div className="intro-row">
                 <p>Provide the required information below to add a class.</p>
-                <Button onClick={() => back()}>Go Back</Button>
+                <Button className="cursor-pointer" onClick={() => back()}>Go Back</Button>
             </div>
 
             <Separator/>
