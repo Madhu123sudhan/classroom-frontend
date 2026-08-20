@@ -17,8 +17,8 @@ import "./App.css";
 import {BookOpen, GraduationCap, Home} from "lucide-react";
 import SubjectsCreate from "@/pages/subjects/create.tsx";
 import SubjectsList from "@/pages/subjects/list.tsx";
-import ClassesList from "@/pages/classes/create.tsx";
-import ClassesCreate from "@/pages/classes/list.tsx";
+import ClassesList from "@/pages/classes/list.tsx";
+import ClassesCreate from "@/pages/classes/create.tsx";
 
 function App() {
     return (

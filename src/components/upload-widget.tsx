@@ -1,19 +1,13 @@
 import {useEffect, useRef, useState} from "react";
-import {UploadWidgetValue} from "@/types";
+import {UploadWidgetProps, UploadWidgetValue} from "@/types";
 import {CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET} from "@/constants"
 import {UploadCloud} from "lucide-react";
-
-// interface UploadWidgetProps {
-//     value?: UploadWidgetValue | null;
-//     onChange: (value: UploadWidgetValue | null) => void;
-//     disabled?: boolean;
-// }
 
 const UploadWidget = ({
                           value = null,
                           onChange,
                           disabled = false,
-                      }) => {
+                      }: UploadWidgetProps) => {
     const widgetRef = useRef<CloudinaryWidget | null>(null);
     const onChangeRef = useRef<
         ((value: UploadWidgetValue | null) => void) | undefined
@@ -82,7 +76,7 @@ const UploadWidget = ({
                     tabIndex={0}
                     onClick={openWidget}
                     onKeyDown={(event) => {
-                        if (event.key === "Enter") {
+                        if (event.key === "Enter" || event.key === " ") {
                             event.preventDefault();
                             openWidget();
                         }
