@@ -320,7 +320,7 @@ const Create = () => {
 
                                 <Separator/>
 
-                                <Button type="submit" size="lg" className="w-full">
+                                <Button type="submit" disabled={isSubmitting} size="lg" className="w-full">
                                     {isSubmitting ? (
                                         <div className="flex gap-1">
                                             <span>Creating Class...</span>

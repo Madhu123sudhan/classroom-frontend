@@ -68,6 +68,9 @@ const UploadWidget = ({
             {preview ? (
                 <div className="upload-preview">
                     <img src={preview.url} alt='uploaded file'/>
+                    <button type="button" onClick={openWidget} disabled={disabled}>
+                        Replace photo
+                    </button>
                 </div>
             ) : (
                 <div
