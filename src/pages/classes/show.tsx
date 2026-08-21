@@ -112,10 +112,6 @@ const ClassesShow = () => {
         );
     }
 
-    console.log("CLASS DETAILS:", classDetails);
-    console.log("BANNER URL:", classDetails.bannerUrl);
-    console.log("BANNER PUBLIC ID:", classDetails.bannerCldPubId);
-
     const teacherName = classDetails.teacher?.name ?? "Unknown";
     const teacherInitials = teacherName
         .split(" ")
