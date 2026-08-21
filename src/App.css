@@ -177,9 +177,15 @@
     --shadow-2xl: var(--shadow-2xl);
 }
 
-.banner {
-    /*display: flex;*/
+.bg-top-announcement {
     display: none !important;
+}
+
+.class-banner {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0.75rem;
 }
 
 @layer components {
