@@ -12,6 +12,8 @@ import {useTable} from "@refinedev/react-table";
 import {Subject} from "@/types";
 import {ColumnDef} from "@tanstack/react-table";
 import {Badge} from "@/components/ui/badge.tsx";
+import {ShowButton} from "@/components/refine-ui/buttons/show.tsx";
+import {DeleteButton} from "@/components/refine-ui/buttons/delete.tsx";
 
 
 const SubjectsList = () => {
@@ -56,7 +58,33 @@ const SubjectsList = () => {
                 size: 300,
                 header: () => <p className="column-title ml-2">Description</p>,
                 cell: ({getValue}) => <span className="truncate line-clamp-2">{getValue<string>()}</span>
-            }
+            },
+            {
+                id: "actions",
+                size: 220,
+                header: () => <p className="column-title">Details</p>,
+                cell: ({row}) => (
+                    <div className="flex items-center gap-2">
+                        <ShowButton
+                            resource="subjects"
+                            recordItemId={row.original.id}
+                            variant="outline"
+                            size="sm"
+                        >
+                            View
+                        </ShowButton>
+
+                        <DeleteButton
+                            resource="subjects"
+                            recordItemId={row.original.id}
+                            variant="destructive"
+                            size="sm"
+                        >
+                            Remove
+                        </DeleteButton>
+                    </div>
+                ),
+            },
         ], []),
         refineCoreProps: {
             resource: 'subjects',

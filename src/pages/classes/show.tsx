@@ -2,7 +2,7 @@ import {useShow} from "@refinedev/core";
 import {useTable} from "@refinedev/react-table";
 import {ColumnDef} from "@tanstack/react-table";
 import {useMemo} from "react";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 
 import {DataTable} from "@/components/refine-ui/data-table/data-table";
 import {ShowButton} from "@/components/refine-ui/buttons/show";
@@ -15,6 +15,7 @@ import {Separator} from "@/components/ui/separator";
 import {ClassDetails} from "@/types";
 import {bannerPhoto} from "@/lib/cloudinary.ts";
 import {AdvancedImage} from "@cloudinary/react";
+import {Copy} from "lucide-react";
 
 type ClassUser = {
     id: string;
@@ -27,6 +28,19 @@ type ClassUser = {
 const ClassesShow = () => {
     const {id} = useParams();
     const classId = id ?? "";
+
+    const navigate = useNavigate();
+
+    const handleCopyInviteCode = async () => {
+        if (!classDetails?.inviteCode) return;
+
+        try {
+            await navigator.clipboard.writeText(classDetails.inviteCode);
+            alert("Invite code copied!");
+        } catch (error) {
+            console.error("Failed to copy invite code:", error);
+        }
+    };
 
     const {query} = useShow<ClassDetails>({
         resource: "classes",
@@ -217,6 +231,33 @@ const ClassesShow = () => {
 
                 <Separator/>
 
+                {/* Invide code */}
+                <div className="invite-code">
+                    <p>🔑 Invite Code</p>
+
+                    <div className="flex items-center gap-3 mt-2">
+                        <Badge variant="outline" className="text-base px-4 py-2">
+                            {classDetails?.inviteCode}
+                        </Badge>
+
+                        <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={handleCopyInviteCode}
+                        >
+                            <Copy className="h-4 w-4 mr-2"/>
+                            Copy
+                        </Button>
+                    </div>
+
+                    <p className="text-sm text-muted-foreground mt-2">
+                        Share this code with students so they can join this class.
+                    </p>
+                </div>
+
+                <Separator/>
+
                 {/* Join Class Section */}
                 <div className="join">
                     <h2>🎓 Join Class</h2>
@@ -228,7 +269,11 @@ const ClassesShow = () => {
                     </ol>
                 </div>
 
-                <Button size="lg" className="w-full">
+                <Button
+                    size="lg"
+                    className="w-full"
+                    onClick={() => navigate("/enrollments/join")}
+                >
                     Join Class
                 </Button>
             </Card>

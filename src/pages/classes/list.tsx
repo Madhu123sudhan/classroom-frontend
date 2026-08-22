@@ -12,6 +12,7 @@ import {ColumnDef} from "@tanstack/react-table";
 import {Badge} from "@/components/ui/badge.tsx";
 import {useList} from "@refinedev/core";
 import {ShowButton} from "@/components/refine-ui/buttons/show.tsx";
+import {DeleteButton} from "@/components/refine-ui/buttons/delete.tsx";
 
 const ClassesList = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -102,10 +103,29 @@ const ClassesList = () => {
         },
         {
             id: 'details',
-            size: 140,
+            size: 220,
             header: () => <p className="column-title">Details</p>,
-            cell: ({row}) => <ShowButton resource="classes" recordItemId={row.original.id} variant="outline"
-                                         size="sm">View</ShowButton>
+            cell: ({row}) => (
+                <div className="flex items-center gap-2">
+                    <ShowButton
+                        resource="classes"
+                        recordItemId={row.original.id}
+                        variant="outline"
+                        size="sm"
+                    >
+                        View
+                    </ShowButton>
+
+                    <DeleteButton
+                        resource="classes"
+                        recordItemId={row.original.id}
+                        variant="destructive"
+                        size="sm"
+                    >
+                        Remove
+                    </DeleteButton>
+                </div>
+            ),
         }
     ], []);
 
@@ -115,7 +135,7 @@ const ClassesList = () => {
             resource: 'classes',
             pagination: {pageSize: 10, mode: 'server'},
             filters: {
-                permanent: [...subjectFilters, ...teacherFilters, ...searchFilters]
+                permanent: [...subjectFilters, ...teacherFilters, ...searchFilters],
             },
             sorters: {
                 initial: [

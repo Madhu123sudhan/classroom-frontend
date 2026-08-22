@@ -1,42 +1,62 @@
-import { useGetIdentity } from "@refinedev/core";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
-
-type User = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  fullName: string;
-  email: string;
-  avatar?: string;
-};
+import {useGetIdentity} from "@refinedev/core";
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import {Skeleton} from "@/components/ui/skeleton";
+import {cn} from "@/lib/utils";
+import type {User} from "@/types";
 
 export function UserAvatar() {
-  const { data: user, isLoading: userIsLoading } = useGetIdentity<User>();
+    const {data: user, isLoading: userIsLoading} = useGetIdentity<User>();
 
-  if (userIsLoading || !user) {
-    return <Skeleton className={cn("h-10", "w-10", "rounded-full")} />;
-  }
+    if (userIsLoading || !user) {
+        return (
+            <Skeleton
+                className={cn(
+                    "h-10",
+                    "w-10",
+                    "rounded-full"
+                )}
+            />
+        );
+    }
 
-  const { fullName, avatar } = user;
+    return (
+        <Avatar
+            className={cn(
+                "h-10",
+                "w-10",
+                "border",
+                "border-border",
+                "cursor-pointer"
+            )}
+        >
+            {user.image && (
+                <AvatarImage
+                    src={user.image}
+                    alt={user.name}
+                />
+            )}
 
-  return (
-    <Avatar className={cn("h-10", "w-10")}>
-      {avatar && <AvatarImage src={avatar} alt={fullName} />}
-      <AvatarFallback>{getInitials(fullName)}</AvatarFallback>
-    </Avatar>
-  );
+            <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
+                {getInitials(user.name)}
+            </AvatarFallback>
+        </Avatar>
+    );
 }
 
 const getInitials = (name = "") => {
-  const names = name.split(" ");
-  let initials = names[0].substring(0, 1).toUpperCase();
+    const parts = name.trim().split(" ").filter(Boolean);
 
-  if (names.length > 1) {
-    initials += names[names.length - 1].substring(0, 1).toUpperCase();
-  }
-  return initials;
+    if (parts.length === 0) {
+        return "?";
+    }
+
+    if (parts.length === 1) {
+        return parts[0][0]?.toUpperCase() ?? "?";
+    }
+
+    return `${parts[0][0] ?? ""}${
+        parts[parts.length - 1][0] ?? ""
+    }`.toUpperCase();
 };
 
 UserAvatar.displayName = "UserAvatar";
